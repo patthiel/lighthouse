@@ -30,6 +30,8 @@ class Fetcher {
     this._onRequestPausedHandlers = new Map();
     this._onRequestPaused = this._onRequestPaused.bind(this);
     this._enabled = false;
+    /** @type {string|null} */
+    this._universalBrowserContextId = null;
   }
 
   /**
@@ -119,8 +121,14 @@ class Fetcher {
       throw new Error('Must call `enable` before using fetchResource');
     }
 
-    if (await this.shouldUseLegacyFetcher()) {
-      return this._fetchResourceIframe(url, options);
+    if (global.isLightrider) {
+      // eslint-disable-next-line no-undef
+      const response = await fetch(url);
+      const content = await response.text();
+      return {
+        content,
+        status: response.status,
+      };
     }
 
     return this._fetchResourceOverProtocol(url, options);
@@ -173,23 +181,26 @@ class Fetcher {
   }
 
   /**
-   * @param {string} requestId
-   * @return {Promise<string>}
-   */
-  async _resolveResponseBody(requestId) {
-    const responseBody = await this.session.sendCommand('Fetch.getResponseBody', {requestId});
-    if (responseBody.base64Encoded) {
-      return Buffer.from(responseBody.body, 'base64').toString();
-    }
-    return responseBody.body;
-  }
-
-  /**
    * @param {string} url
    * @param {{timeout: number}} options timeout is in ms
    * @return {Promise<FetchResponse>}
    */
   async _fetchResourceOverProtocol(url, options) {
+    if (global.isLightrider) {
+      // eslint-disable-next-line no-undef
+      const response = await fetch(url);
+      const content = await response.text();
+      return {
+        content,
+        status: response.status,
+      };
+    }
+    // if (!this._universalBrowserContextId) {
+    //   this._universalBrowserContextId =
+    //     (await this.session.sendCommand('Target.createBrowserContext')).browserContextId;
+    //   console.log('...', this._universalBrowserContextId);
+    // }
+
     const startTime = Date.now();
 
     /** @type {NodeJS.Timeout} */
@@ -210,108 +221,6 @@ class Fetcher {
     const timeout = options.timeout - (Date.now() - startTime);
     const content = await this._readIOStream(response.stream, {timeout});
     return {status: response.status, content};
-  }
-
-  /**
-   * Fetches resource by injecting an iframe into the page.
-   * @param {string} url
-   * @param {{timeout: number}} options timeout is in ms
-   * @return {Promise<FetchResponse>}
-   */
-  async _fetchResourceIframe(url, options) {
-    /** @type {Promise<FetchResponse>} */
-    const requestInterceptionPromise = new Promise((resolve, reject) => {
-      /** @param {LH.Crdp.Fetch.RequestPausedEvent} event */
-      const handlerAsync = async event => {
-        const {requestId, responseStatusCode} = event;
-
-        // The first requestPaused event is for the request stage. Continue it.
-        if (!responseStatusCode) {
-          // Remove cookies so we aren't buying stuff on Amazon.
-          const headers = Object.entries(event.request.headers)
-            .filter(([name]) => name !== 'Cookie')
-            .map(([name, value]) => {
-              return {name, value};
-            });
-
-          await this.session.sendCommand('Fetch.continueRequest', {
-            requestId,
-            headers,
-          });
-          return;
-        }
-
-        if (responseStatusCode >= 200 && responseStatusCode <= 299) {
-          resolve({
-            status: responseStatusCode,
-            content: await this._resolveResponseBody(requestId),
-          });
-        } else {
-          resolve({status: responseStatusCode, content: null});
-        }
-
-        // Fail the request (from the page's perspective) so that the iframe never loads.
-        await this.session.sendCommand('Fetch.failRequest', {requestId, errorReason: 'Aborted'});
-      };
-      this._setOnRequestPausedHandler(url, event => handlerAsync(event).catch(reject));
-    });
-
-    /**
-     * @param {string} src
-     */
-    /* c8 ignore start */
-    function injectIframe(src) {
-      const iframe = document.createElement('iframe');
-      // Try really hard not to affect the page.
-      iframe.style.display = 'none';
-      iframe.style.visibility = 'hidden';
-      iframe.style.position = 'absolute';
-      iframe.style.top = '-1000px';
-      iframe.style.left = '-1000px';
-      iframe.style.width = '1px';
-      iframe.style.height = '1px';
-      iframe.src = src;
-      iframe.onload = iframe.onerror = () => {
-        iframe.remove();
-        iframe.onload = null;
-        iframe.onerror = null;
-      };
-      document.body.appendChild(iframe);
-    }
-    /* c8 ignore stop */
-
-    /** @type {NodeJS.Timeout} */
-    let asyncTimeout;
-    /** @type {Promise<never>} */
-    const timeoutPromise = new Promise((_, reject) => {
-      asyncTimeout = setTimeout(reject, options.timeout, new Error('Timed out fetching resource.'));
-    });
-
-    const racePromise = Promise.race([
-      timeoutPromise,
-      requestInterceptionPromise,
-    ]).finally(() => clearTimeout(asyncTimeout));
-
-    // Temporarily disable auto-attaching for this iframe.
-    await this.session.sendCommand('Target.setAutoAttach', {
-      autoAttach: false,
-      waitForDebuggerOnStart: false,
-    });
-
-    const injectionPromise = this.executionContext.evaluate(injectIframe, {
-      args: [url],
-      useIsolation: true,
-    });
-
-    const [fetchResult] = await Promise.all([racePromise, injectionPromise]);
-
-    await this.session.sendCommand('Target.setAutoAttach', {
-      flatten: true,
-      autoAttach: true,
-      waitForDebuggerOnStart: true,
-    });
-
-    return fetchResult;
   }
 }
 
