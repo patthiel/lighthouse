@@ -46,7 +46,12 @@ class Fetcher {
   async _fetchWithFetchApi(url) {
     // eslint-disable-next-line no-undef
     const response = await fetch(url);
-    const content = await response.text();
+
+    let content = null;
+    try {
+      content = await response.text();
+    } catch {}
+
     return {
       content,
       status: response.status,
