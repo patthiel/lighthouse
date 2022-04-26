@@ -7,15 +7,6 @@
 
 /* eslint-env jest */
 
-/** @type {number} */
-let browserMilestone;
-
-jest.mock('../../gather/driver/environment.js', () => ({
-  getBrowserVersion: jest.fn().mockImplementation(() => {
-    return Promise.resolve({milestone: browserMilestone});
-  }),
-}));
-
 const Fetcher = require('../../gather/fetcher.js');
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
@@ -31,37 +22,7 @@ let fetcher;
 beforeEach(() => {
   connectionStub = new Connection();
   driver = new Driver(connectionStub);
-  fetcher = new Fetcher(driver.defaultSession, driver.executionContext);
-  browserMilestone = 92;
-});
-
-describe('.fetchResource', () => {
-  beforeEach(() => {
-    fetcher._enabled = true;
-    fetcher._fetchResourceOverProtocol = jest.fn().mockReturnValue(Promise.resolve('PROTOCOL'));
-    fetcher._fetchResourceIframe = jest.fn().mockReturnValue(Promise.resolve('IFRAME'));
-  });
-
-  it('throws if fetcher not enabled', async () => {
-    fetcher._enabled = false;
-    const resultPromise = fetcher.fetchResource('https://example.com');
-    await expect(resultPromise).rejects.toThrow(/Must call `enable`/);
-  });
-
-  it('calls fetchResourceOverProtocol in newer chrome', async () => {
-    const result = await fetcher.fetchResource('https://example.com');
-    expect(result).toEqual('PROTOCOL');
-    expect(fetcher._fetchResourceOverProtocol).toHaveBeenCalled();
-    expect(fetcher._fetchResourceIframe).not.toHaveBeenCalled();
-  });
-
-  it('calls fetchResourceIframe in chrome before M92', async () => {
-    browserMilestone = 91;
-    const result = await fetcher.fetchResource('https://example.com');
-    expect(result).toEqual('IFRAME');
-    expect(fetcher._fetchResourceOverProtocol).not.toHaveBeenCalled();
-    expect(fetcher._fetchResourceIframe).toHaveBeenCalled();
-  });
+  fetcher = new Fetcher(driver.defaultSession);
 });
 
 describe('._readIOStream', () => {

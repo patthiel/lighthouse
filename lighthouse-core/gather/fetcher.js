@@ -6,12 +6,11 @@
 'use strict';
 
 /**
- * @fileoverview Fetcher is a utility for making requests within the context of the page.
- * Requests can circumvent CORS, and so are good for fetching source maps that may be hosted
- * on a different origin.
+ * @fileoverview Fetcher is a utility for making requests to any arbitrary resource,
+ * ignoring normal browser constraints such as CORS.
  */
 
-/* global document */
+/* global fetch */
 
 /** @typedef {{content: string|null, status: number|null}} FetchResponse */
 
@@ -21,66 +20,37 @@ class Fetcher {
    */
   constructor(session) {
     this.session = session;
-    this._enabled = false;
-    /** @type {string|null} */
-    this._universalBrowserContextId = null;
   }
 
   /**
-   * Chrome M92 and above:
-   * We use `Network.loadNetworkResource` to fetch each resource.
-   *
-   * Chrome <M92:
-   * The Fetch domain accepts patterns for controlling what requests are intercepted, but we
-   * enable the domain for all patterns and filter events at a lower level to support multiple
-   * concurrent usages. Reasons for this:
-   *
-   * 1) only one set of patterns may be applied for the entire domain.
-   * 2) every request that matches the patterns are paused and only resumes when certain Fetch
-   *    commands are sent. So a listener of the `Fetch.requestPaused` event must either handle
-   *    the requests it cares about, or explicitly allow them to continue.
-   * 3) if multiple commands to continue the same request are sent, protocol errors occur.
-   *
-   * So instead we have one global `Fetch.enable` / `Fetch.requestPaused` pair, and allow specific
-   * urls to be intercepted via `fetcher._setOnRequestPausedHandler`.
-   */
-  async enable() {
-    if (this._enabled) return;
-
-    this._enabled = true;
-  }
-
-  async disable() {
-    if (!this._enabled) return;
-
-    this._enabled = false;
-  }
-
-  /**
-   * Requires that `fetcher.enable` has been called.
-   *
-   * Fetches any resource in a way that circumvents CORS.
+   * Fetches any resource using the network directly.
    *
    * @param {string} url
    * @param {{timeout: number}=} options timeout is in ms
    * @return {Promise<FetchResponse>}
    */
   async fetchResource(url, options = {timeout: 2_000}) {
-    if (!this._enabled) {
-      throw new Error('Must call `enable` before using fetchResource');
-    }
-
+    // In Lightrider, `Network.loadNetworkResource` is not implemented, but fetch
+    // is configured to work for any resource.
     if (global.isLightrider) {
-      // eslint-disable-next-line no-undef
-      const response = await fetch(url);
-      const content = await response.text();
-      return {
-        content,
-        status: response.status,
-      };
+      return this._wrapWithTimeout(this._fetchWithFetchApi(url), options.timeout);
     }
 
     return this._fetchResourceOverProtocol(url, options);
+  }
+
+  /**
+   * @param {string} url
+   * @return {Promise<FetchResponse>}
+   */
+  async _fetchWithFetchApi(url) {
+    // eslint-disable-next-line no-undef
+    const response = await fetch(url);
+    const content = await response.text();
+    return {
+      content,
+      status: response.status,
+    };
   }
 
   /**
@@ -135,34 +105,8 @@ class Fetcher {
    * @return {Promise<FetchResponse>}
    */
   async _fetchResourceOverProtocol(url, options) {
-    if (global.isLightrider) {
-      // eslint-disable-next-line no-undef
-      const response = await fetch(url);
-      const content = await response.text();
-      return {
-        content,
-        status: response.status,
-      };
-    }
-    // if (!this._universalBrowserContextId) {
-    //   this._universalBrowserContextId =
-    //     (await this.session.sendCommand('Target.createBrowserContext')).browserContextId;
-    //   console.log('...', this._universalBrowserContextId);
-    // }
-
     const startTime = Date.now();
-
-    /** @type {NodeJS.Timeout} */
-    let timeoutHandle;
-    const timeoutPromise = new Promise((_, reject) => {
-      timeoutHandle = setTimeout(reject, options.timeout, new Error('Timed out fetching resource'));
-    });
-
-    const responsePromise = this._loadNetworkResource(url);
-
-    /** @type {{stream: LH.Crdp.IO.StreamHandle|null, status: number|null}} */
-    const response = await Promise.race([responsePromise, timeoutPromise])
-      .finally(() => clearTimeout(timeoutHandle));
+    const response = await this._wrapWithTimeout(this._loadNetworkResource(url), options.timeout);
 
     const isOk = response.status && response.status >= 200 && response.status <= 299;
     if (!response.stream || !isOk) return {status: response.status, content: null};
@@ -170,6 +114,24 @@ class Fetcher {
     const timeout = options.timeout - (Date.now() - startTime);
     const content = await this._readIOStream(response.stream, {timeout});
     return {status: response.status, content};
+  }
+
+  /**
+   * @template T
+   * @param {Promise<T>} promise
+   * @param {number} ms
+   */
+  async _wrapWithTimeout(promise, ms) {
+    /** @type {NodeJS.Timeout} */
+    let timeoutHandle;
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutHandle = setTimeout(reject, ms, new Error('Timed out fetching resource'));
+    });
+
+    /** @type {Promise<T>} */
+    const wrappedPromise = await Promise.race([promise, timeoutPromise])
+      .finally(() => clearTimeout(timeoutHandle));
+    return wrappedPromise;
   }
 }
 

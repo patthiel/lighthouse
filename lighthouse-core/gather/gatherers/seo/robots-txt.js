@@ -7,25 +7,6 @@
 
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 
-/* global fetch, location */
-
-/** @return {Promise<LH.Artifacts['RobotsTxt']>} */
-/* c8 ignore start */
-async function getRobotsTxtContent() {
-  try {
-    const response = await fetch(new URL('/robots.txt', location.href).href);
-    if (!response.ok) {
-      return {status: response.status, content: null};
-    }
-
-    const content = await response.text();
-    return {status: response.status, content};
-  } catch (err) {
-    return {status: null, content: null, errorMessage: err.message};
-  }
-}
-/* c8 ignore stop */
-
 class RobotsTxt extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
@@ -39,7 +20,6 @@ class RobotsTxt extends FRGatherer {
   async getArtifact(passContext) {
     const {finalUrl} = passContext.baseArtifacts.URL;
     const robotsUrl = new URL('/robots.txt', finalUrl).href;
-    await passContext.driver.fetcher.enable();
     return passContext.driver.fetcher.fetchResource(robotsUrl)
       .catch(err => ({status: null, content: null, errorMessage: err.message}));
   }
