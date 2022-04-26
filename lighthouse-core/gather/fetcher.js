@@ -15,20 +15,12 @@
 
 /** @typedef {{content: string|null, status: number|null}} FetchResponse */
 
-const log = require('lighthouse-logger');
-const {getBrowserVersion} = require('./driver/environment.js');
-
 class Fetcher {
   /**
    * @param {LH.Gatherer.FRProtocolSession} session
-   * @param {import('./driver/execution-context.js')} executionContext
    */
-  constructor(session, executionContext) {
+  constructor(session) {
     this.session = session;
-    this.executionContext = executionContext;
-    /** @type {Map<string, (event: LH.Crdp.Fetch.RequestPausedEvent) => void>} */
-    this._onRequestPausedHandlers = new Map();
-    this._onRequestPaused = this._onRequestPaused.bind(this);
     this._enabled = false;
     /** @type {string|null} */
     this._universalBrowserContextId = null;
@@ -56,55 +48,12 @@ class Fetcher {
     if (this._enabled) return;
 
     this._enabled = true;
-    await this.session.sendCommand('Fetch.enable', {
-      patterns: [{requestStage: 'Request'}, {requestStage: 'Response'}],
-    });
-    await this.session.on('Fetch.requestPaused', this._onRequestPaused);
   }
 
   async disable() {
     if (!this._enabled) return;
 
     this._enabled = false;
-    await this.session.off('Fetch.requestPaused', this._onRequestPaused);
-    await this.session.sendCommand('Fetch.disable');
-    this._onRequestPausedHandlers.clear();
-  }
-
-  /**
-   * @param {string} url
-   * @param {(event: LH.Crdp.Fetch.RequestPausedEvent) => void} handler
-   */
-  async _setOnRequestPausedHandler(url, handler) {
-    this._onRequestPausedHandlers.set(url, handler);
-  }
-
-  /**
-   * @param {LH.Crdp.Fetch.RequestPausedEvent} event
-   */
-  _onRequestPaused(event) {
-    const handler = this._onRequestPausedHandlers.get(event.request.url);
-    if (handler) {
-      handler(event);
-    } else {
-      // Nothing cares about this URL, so continue.
-      this.session.sendCommand('Fetch.continueRequest', {requestId: event.requestId}).catch(err => {
-        log.error('Fetcher', `Failed to continueRequest: ${err.message}`);
-      });
-    }
-  }
-
-  /**
-   * `Network.loadNetworkResource` was introduced in M88.
-   * The long timeout bug with `IO.read` was fixed in M92:
-   * https://bugs.chromium.org/p/chromium/issues/detail?id=1191757
-   * Lightrider has a bug forcing us to use the old version for now:
-   * https://docs.google.com/document/d/1V-DxgsOFMPxUuFrdGPQpyiCqSljvgNlOqXCtqDtd0b8/edit?usp=sharing&resourcekey=0-aIaIqcHFKG-0dX4MAudBEw
-   * @return {Promise<boolean>}
-   */
-  async shouldUseLegacyFetcher() {
-    const {milestone} = await getBrowserVersion(this.session);
-    return milestone < 92 || Boolean(global.isLightrider);
   }
 
   /**

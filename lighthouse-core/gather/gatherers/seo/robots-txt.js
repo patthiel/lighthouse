@@ -37,15 +37,6 @@ class RobotsTxt extends FRGatherer {
    * @return {Promise<LH.Artifacts['RobotsTxt']>}
    */
   async getArtifact(passContext) {
-    // Iframe fetcher still has issues with CSPs.
-    // Only use the fetcher if we are fetching over the protocol.
-    if (await passContext.driver.fetcher.shouldUseLegacyFetcher()) {
-      return passContext.driver.executionContext.evaluate(getRobotsTxtContent, {
-        args: [],
-        useIsolation: true,
-      });
-    }
-
     const {finalUrl} = passContext.baseArtifacts.URL;
     const robotsUrl = new URL('/robots.txt', finalUrl).href;
     await passContext.driver.fetcher.enable();
