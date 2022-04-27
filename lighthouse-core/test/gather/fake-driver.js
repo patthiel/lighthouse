@@ -15,9 +15,7 @@ function makeFakeDriver({protocolGetVersionResponse}) {
 
   return {
     get fetcher() {
-      return {
-        disable: () => Promise.resolve(),
-      };
+      return {};
     },
     get defaultSession() {
       return this;
