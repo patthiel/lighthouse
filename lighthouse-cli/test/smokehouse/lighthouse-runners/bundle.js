@@ -12,6 +12,7 @@
  */
 
 import fs from 'fs';
+import os from 'os';
 import {Worker, isMainThread, parentPort} from 'worker_threads';
 
 import puppeteer from 'puppeteer-core';
@@ -19,13 +20,21 @@ import ChromeLauncher from 'chrome-launcher';
 
 import ChromeProtocol from '../../../../lighthouse-core/gather/connections/cri.js';
 import {LH_ROOT} from '../../../../root.js';
+import {loadArtifacts, saveArtifacts} from '../../../../lighthouse-core/lib/asset-saver.js';
 
 if (!isMainThread && parentPort) {
   parentPort.once('message', async (message) => {
     const {url, configJson, testRunnerOptions} = message;
     try {
       const result = await runBundledLighthouse(url, configJson, testRunnerOptions);
-      parentPort?.postMessage({type: 'result', value: result});
+      // Save to assets directory because LighthouseError won't survive postMessage.
+      const assetsDir = fs.mkdtempSync(os.tmpdir() + '/smoke-bundle-assets-');
+      await saveArtifacts(result.artifacts, assetsDir);
+      const value = {
+        lhr: result.lhr,
+        assetsDir,
+      };
+      parentPort?.postMessage({type: 'result', value});
     } catch (err) {
       console.error(err);
       parentPort?.postMessage({type: 'error', value: err});
@@ -128,14 +137,17 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   worker.postMessage({url, configJson, testRunnerOptions});
 
   const result = await promise;
-  if (!result.lhr || !result.artifacts) {
+  if (!result.lhr || !result.assetsDir) {
     throw new Error(`invalid response from worker:\n${JSON.stringify(result, null, 2)}`);
   }
+
+  const artifacts = loadArtifacts(result.assetsDir);
+  fs.rmSync(result.assetsDir, {recursive: true});
 
   const log = logs.join('') + '\n';
   return {
     lhr: result.lhr,
-    artifacts: result.artifacts,
+    artifacts,
     log,
   };
 }
