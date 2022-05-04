@@ -48,20 +48,8 @@ describe('SourceMaps gatherer', () => {
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {})
-<<<<<<< HEAD
       .mockResponse('Network.enable', {});
     const fetchMock = jest.fn();
-||||||| 3aa4400cd
-      .mockResponse('Network.enable', {})
-      .mockResponse('Fetch.enable', {})
-      .mockResponse('Fetch.disable', {});
-    const fetchMock = jest.fn();
-=======
-      .mockResponse('Network.enable', {})
-      .mockResponse('Fetch.enable', {})
-      .mockResponse('Fetch.disable', {});
-    const fetchMock = fnAny();
->>>>>>> origin/master
 
     for (const mapAndEvents of mapsAndEvents) {
       const {
