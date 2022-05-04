@@ -7,8 +7,6 @@
 
 import UsesResponsiveImagesAudit from '../../../audits/byte-efficiency/uses-responsive-images.js';
 import {strict as assert} from 'assert';
-
-/* eslint-env jest */
 function generateRecord(resourceSizeInKb, durationInMs, url = 'https://google.com/logo.png', mimeType = 'image/png') {
   return {
     mimeType,

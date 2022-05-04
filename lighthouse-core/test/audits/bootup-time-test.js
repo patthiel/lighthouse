@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import BootupTime from '../../audits/bootup-time.js';
 
 import {strict as assert} from 'assert';

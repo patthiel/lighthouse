@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import ArbitraryEqualityMap from '../../lib/arbitrary-equality-map.js';

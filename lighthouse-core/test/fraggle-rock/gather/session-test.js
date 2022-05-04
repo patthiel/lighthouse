@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 import {EventEmitter} from 'events';
 import ProtocolSession from '../../../fraggle-rock/gather/session.js';

@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/frame-title.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: frame-title audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/th-has-data-cells.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: th-has-data-cells audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

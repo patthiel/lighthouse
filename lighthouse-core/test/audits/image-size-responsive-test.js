@@ -8,8 +8,6 @@
 import ImageSizeResponsiveAudit from '../../audits/image-size-responsive.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 const WIDTH = 800;
 const HEIGHT = 600;
 

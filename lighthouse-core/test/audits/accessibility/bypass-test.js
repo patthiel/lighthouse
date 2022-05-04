@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/bypass.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: bypass audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

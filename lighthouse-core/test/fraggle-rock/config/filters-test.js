@@ -12,8 +12,6 @@ import filters from '../../../fraggle-rock/config/filters.js';
 import {initializeConfig} from '../../../fraggle-rock/config/config.js';
 import log from 'lighthouse-logger';
 
-/* eslint-env jest */
-
 describe('Fraggle Rock Config Filtering', () => {
   const snapshotGatherer = new BaseGatherer();
   snapshotGatherer.meta = {supportedModes: ['snapshot']};

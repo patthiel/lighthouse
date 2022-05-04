@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 // import {startTimespanGather} from '../../../fraggle-rock/gather/timespan-runner.js';
 import {

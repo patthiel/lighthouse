@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import fs from 'fs';
 import {strict as assert} from 'assert';
 import {computeCSSTokenLength, computeJSTokenLength} from '../../lib/minification-estimator.js'; // eslint-disable-line max-len

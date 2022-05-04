@@ -34,8 +34,6 @@ function evaluateRawCspForSyntax(rawCsps) {
   return evaluateForSyntaxErrors(rawCsps.map(parseCsp));
 }
 
-/* eslint-env jest */
-
 describe('getTranslatedDescription', () => {
   it('missing script-src', () => {
     const rawCsp = `object-src 'none'`;

@@ -5,11 +5,10 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import URL from '../../lib/url-shim.js';
 
 import {strict as assert} from 'assert';
+
 const superLongName =
     'https://example.com/thisIsASuperLongURLThatWillTriggerFilenameTruncationWhichWeWantToTest.js';
 

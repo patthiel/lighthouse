@@ -8,8 +8,6 @@
 import LinkTextAudit from '../../../audits/seo/link-text.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('SEO: link text audit', () => {
   it('fails when link with non descriptive text is found', () => {
     const invalidLink = {href: 'https://example.com/otherpage.html', text: 'click here', rel: ''};

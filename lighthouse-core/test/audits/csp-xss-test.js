@@ -9,8 +9,6 @@ import CspXss from '../../audits/csp-xss.js';
 import {Type} from 'csp_evaluator/dist/finding.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 const SEVERITY = {
   syntax: {
     formattedDefault: 'Syntax',

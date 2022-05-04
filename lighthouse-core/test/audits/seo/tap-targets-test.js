@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import TapTargetsAudit from '../../../audits/seo/tap-targets.js';
 
 import constants from '../../../config/constants.js';

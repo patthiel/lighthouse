@@ -5,11 +5,10 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import ViewportDimensionsGatherer from '../../../gather/gatherers/viewport-dimensions.js';
 
 import {strict as assert} from 'assert';
+
 let gatherer;
 
 describe('ViewportDimensions gatherer', () => {

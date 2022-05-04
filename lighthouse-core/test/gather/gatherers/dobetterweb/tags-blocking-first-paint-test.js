@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import TagsBlockingFirstPaint from
   '../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint.js';
 

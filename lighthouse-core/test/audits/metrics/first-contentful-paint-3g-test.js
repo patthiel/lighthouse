@@ -12,8 +12,6 @@ import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
 import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 describe('Performance: first-contentful-paint-3g audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {

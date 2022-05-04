@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import MainDocumentContent from '../../../gather/gatherers/main-document-content.js';
 
 import NetworkRecorder from '../../../lib/network-recorder.js';

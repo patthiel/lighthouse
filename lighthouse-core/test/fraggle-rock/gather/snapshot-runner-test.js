@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 // import {snapshotGather} from '../../../fraggle-rock/gather/snapshot-runner.js';
 import {

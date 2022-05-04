@@ -13,8 +13,6 @@ import {createCommonjsRefs} from '../../../scripts/esm-utils.js';
 
 const {__dirname} = createCommonjsRefs(import.meta);
 
-/* eslint-env jest */
-
 describe('i18n', () => {
   describe('#createMessageInstanceIdFn', () => {
     it('returns an IcuMessage reference', () => {

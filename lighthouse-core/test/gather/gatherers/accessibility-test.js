@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import fs from 'fs';
 import {strict as assert} from 'assert';
 import puppeteer from 'puppeteer';

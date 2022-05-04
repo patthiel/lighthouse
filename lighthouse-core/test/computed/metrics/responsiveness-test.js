@@ -13,8 +13,6 @@ const createTestTrace = require('../../create-test-trace.js');
 const interactionTrace = require('../../fixtures/traces/timespan-responsiveness-m103.trace.json');
 const noInteractionTrace = require('../../fixtures/traces/frame-metrics-m89.json');
 
-/* eslint-env jest */
-
 const childFrameId = 'CAF4634127666E186C9C8B35627DBF0B';
 
 /**

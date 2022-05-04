@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/definition-list.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: definition-list audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

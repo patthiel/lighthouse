@@ -9,8 +9,6 @@ import Audit from '../../audits/content-width.js';
 import constants from '../../config/constants.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 /** @param {LH.SharedFlagsSettings['formFactor']} formFactor */
 const getFakeContext = (formFactor = 'mobile') => ({
   computedCache: new Map(),

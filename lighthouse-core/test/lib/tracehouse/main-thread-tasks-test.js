@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import MainThreadTasks from '../../../lib/tracehouse/main-thread-tasks.js';
 
 import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';

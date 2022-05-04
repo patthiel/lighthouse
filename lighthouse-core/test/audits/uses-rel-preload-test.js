@@ -6,8 +6,6 @@
 
 'use strict';
 
-/* eslint-env jest */
-
 import UsesRelPreload from '../../audits/uses-rel-preload.js';
 
 import {strict as assert} from 'assert';

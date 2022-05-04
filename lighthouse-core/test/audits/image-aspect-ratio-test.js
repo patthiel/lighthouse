@@ -8,8 +8,6 @@
 import ImageAspectRatioAudit from '../../audits/image-aspect-ratio.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 function generateImage(clientSize, naturalDimensions, props, src = 'https://google.com/logo.png') {
   return {
     src,

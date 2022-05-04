@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import FirstMeaningfulPaint from '../../../computed/metrics/first-meaningful-paint.js';
 import {strict as assert} from 'assert';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';

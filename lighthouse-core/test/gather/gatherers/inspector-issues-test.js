@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 import InspectorIssues from '../../../gather/gatherers/inspector-issues.js';

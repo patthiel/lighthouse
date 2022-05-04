@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import * as pruneObsoleteLhlMessages from '../../../scripts/i18n/prune-obsolete-lhl-messages.js';
 
 /**

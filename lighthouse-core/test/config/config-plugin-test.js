@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 import ConfigPlugin from '../../config/config-plugin.js';
 import i18n from '../../lib/i18n/i18n.js';

@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import ConsoleMessagesGatherer from '../../../gather/gatherers/console-messages.js';
 
 import {strict as assert} from 'assert';

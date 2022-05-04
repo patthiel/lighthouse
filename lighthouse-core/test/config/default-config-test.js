@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 import defaultConfig from '../../config/default-config.js';
 

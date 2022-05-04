@@ -8,8 +8,6 @@
 import PluginsAudit from '../../../audits/seo/plugins.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('SEO: Avoids plugins', () => {
   it('fails when page contains java, silverlight or flash content', () => {
     const embeddedContentValues = [

@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import ErrorLogsAudit from '../../audits/errors-in-console.js';
 
 import {strict as assert} from 'assert';

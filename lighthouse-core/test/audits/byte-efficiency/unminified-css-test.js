@@ -9,8 +9,6 @@ const KB = 1024;
 import UnminifiedCssAudit from '../../../audits/byte-efficiency/unminified-css.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 const resourceType = 'Stylesheet';
 describe('Page uses optimized css', () => {
   it('fails when given unminified stylesheets', () => {

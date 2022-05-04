@@ -9,8 +9,6 @@ import DOMSize from '../../../audits/dobetterweb/dom-size.js';
 import {strict as assert} from 'assert';
 const options = DOMSize.defaultOptions;
 
-/* eslint-env jest */
-
 describe('DOMSize audit', () => {
   const numElements = 1500;
   const artifact = {

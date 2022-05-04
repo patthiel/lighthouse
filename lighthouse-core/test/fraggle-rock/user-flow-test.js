@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
 // import UserFlow from '../../fraggle-rock/user-flow.js';

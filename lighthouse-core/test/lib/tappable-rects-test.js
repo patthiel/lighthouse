@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {addRectTopAndBottom} from '../../lib/rect-helpers.js';
 
 import {getTappableRectsFromClientRects} from '../../lib/tappable-rects.js';

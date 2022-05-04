@@ -8,8 +8,6 @@
 import NotificationOnStart from '../../../audits/dobetterweb/notification-on-start.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('UX: notification audit', () => {
   it('fails when notification has been automatically requested', async () => {
     const text = 'Do not request notification permission without a user action.';

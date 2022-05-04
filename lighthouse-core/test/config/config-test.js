@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import Config from '../../config/config.js';
 import {strict as assert} from 'assert';
 import path from 'path';

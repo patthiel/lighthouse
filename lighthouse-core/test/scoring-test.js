@@ -8,7 +8,6 @@
 import {strict as assert} from 'assert';
 import ReportScoring from '../scoring.js';
 
-/* eslint-env jest */
 describe('ReportScoring', () => {
   describe('#arithmeticMean', () => {
     it('should work for empty list', () => {

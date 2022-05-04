@@ -10,8 +10,6 @@ import {strict as assert} from 'assert';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 import createTestTrace from '../create-test-trace.js';
 
-/* eslint-env jest */
-
 const FAILING_THREE_REDIRECTS = [{
   requestId: '1',
   startTime: 0,

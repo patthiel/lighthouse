@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/td-headers-attr.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: td-headers-attr audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

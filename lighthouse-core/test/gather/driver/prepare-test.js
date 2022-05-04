@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 import {createMockSession, createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
 import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';

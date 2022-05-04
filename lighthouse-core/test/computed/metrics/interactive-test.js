@@ -27,8 +27,6 @@ function generateNetworkRecords(records, timeOrigin) {
     };
   });
 }
-
-/* eslint-env jest */
 describe('Metrics: TTI', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

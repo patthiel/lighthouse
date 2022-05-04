@@ -6,8 +6,6 @@
 
 'use strict';
 
-/* eslint-env jest */
-
 import UsesRelPreconnect from '../../audits/uses-rel-preconnect.js';
 
 import {strict as assert} from 'assert';

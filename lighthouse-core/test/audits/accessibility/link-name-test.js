@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/link-name.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: link-name audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

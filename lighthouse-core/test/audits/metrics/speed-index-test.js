@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import Audit from '../../../audits/metrics/speed-index.js';
 
 import {strict as assert} from 'assert';

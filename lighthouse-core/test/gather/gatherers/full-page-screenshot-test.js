@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 import {createMockContext, mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
 // import FullPageScreenshotGatherer from '../../../gather/gatherers/full-page-screenshot.js';

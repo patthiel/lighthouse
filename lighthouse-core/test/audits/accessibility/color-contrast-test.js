@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/color-contrast.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: color-contrast audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

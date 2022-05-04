@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {createScript, loadSourceMapFixture} from '../test-utils.js';
 
 import ValidSourceMaps from '../../audits/valid-source-maps.js';

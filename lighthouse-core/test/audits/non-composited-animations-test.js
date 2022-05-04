@@ -6,8 +6,6 @@
 'use strict';
 
 import NonCompositedAnimationsAudit from '../../audits/non-composited-animations.js';
-
-/* eslint-env jest */
 describe('Non-composited animations audit', () => {
   it('correctly surfaces non-composited animations', async () => {
     const artifacts = {

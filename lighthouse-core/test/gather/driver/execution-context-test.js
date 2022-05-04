@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 import ExecutionContext from '../../../gather/driver/execution-context.js';
 import {

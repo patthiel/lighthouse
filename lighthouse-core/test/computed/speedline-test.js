@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import pwaTrace from '../fixtures/traces/progressive-app.json';

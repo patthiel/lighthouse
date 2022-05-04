@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 import {URL} from 'url';
 import TotalByteWeight from '../../../audits/byte-efficiency/total-byte-weight.js';

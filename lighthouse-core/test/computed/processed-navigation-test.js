@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import ProcessedTrace from '../../computed/processed-trace.js';
 
 import ProcessedNavigation from '../../computed/processed-navigation.js';

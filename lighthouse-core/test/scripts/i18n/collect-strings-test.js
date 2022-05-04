@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import * as collect from '../../../scripts/i18n/collect-strings.js';
 
 function evalJustUIStrings(justUIStrings) {

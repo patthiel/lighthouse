@@ -14,8 +14,6 @@ import {LH_ROOT} from '../../../../root.js';
 
 const {nonSimulatedPassConfigOverrides} = constants;
 
-/* eslint-env jest */
-
 describe('Fraggle Rock Config', () => {
   /** @type {LH.Gatherer.GatherMode} */
   let gatherMode = 'snapshot';

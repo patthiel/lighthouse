@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/video-caption.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: video-caption audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

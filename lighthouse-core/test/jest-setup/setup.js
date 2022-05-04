@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 const format = require('../../../shared/localization/format.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
 

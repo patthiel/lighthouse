@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import thirdPartyWeb from '../../lib/third-party-web.js';
 
 describe('third party web', () => {

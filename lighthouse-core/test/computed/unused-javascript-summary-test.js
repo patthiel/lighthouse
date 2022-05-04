@@ -8,8 +8,6 @@
 import assert from 'assert';
 import UnusedJavaScriptSummary from '../../computed/unused-javascript-summary.js';
 
-/* eslint-env jest */
-
 function generateUsage(url, ranges) {
   const functions = ranges.map(range => {
     return {

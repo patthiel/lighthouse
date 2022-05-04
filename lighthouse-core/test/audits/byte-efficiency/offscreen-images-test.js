@@ -9,8 +9,6 @@ import UnusedImages from '../../../audits/byte-efficiency/offscreen-images.js';
 import {strict as assert} from 'assert';
 import createTestTrace from '../../create-test-trace.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
-
-/* eslint-env jest */
 function generateRecord({
   resourceSizeInKb,
   url = 'https://google.com/logo.png',

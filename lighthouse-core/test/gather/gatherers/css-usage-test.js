@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 import CSSUsage from '../../../gather/gatherers/css-usage.js';

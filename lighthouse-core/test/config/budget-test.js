@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import Budget from '../../config/budget.js';
 import {strict as assert} from 'assert';
 

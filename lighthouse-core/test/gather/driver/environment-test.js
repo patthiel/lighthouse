@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {defaultSettings} from '../../../config/constants.js';
 
 import environment from '../../../gather/driver/environment.js';

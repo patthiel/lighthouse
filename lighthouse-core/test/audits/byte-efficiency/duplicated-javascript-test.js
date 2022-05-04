@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import DuplicatedJavascript from '../../../audits/byte-efficiency/duplicated-javascript.js';
 
 import trace from '../../fixtures/traces/lcp-m78.json';

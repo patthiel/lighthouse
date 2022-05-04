@@ -18,8 +18,6 @@ import devtoolsLogM78 from '../../fixtures/traces/lcp-m78.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Byte efficiency base audit', () => {
   let graph;
   let simulator;

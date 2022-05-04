@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/html-lang-valid.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: html-lang-valid audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

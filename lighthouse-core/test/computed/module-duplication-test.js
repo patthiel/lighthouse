@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import ModuleDuplication from '../../computed/module-duplication.js';
 
 import {createScript, loadSourceMapFixture} from '../test-utils.js';

@@ -49,8 +49,6 @@ function createComplexGraph() {
     nodeH,
   };
 }
-
-/* eslint-env jest */
 describe('DependencyGraph/Node', () => {
   describe('#constructor', () => {
     it('should set the ID', () => {

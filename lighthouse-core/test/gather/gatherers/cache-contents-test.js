@@ -5,11 +5,10 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import CacheContentGather from '../../../gather/gatherers/cache-contents.js';
 
 import {strict as assert} from 'assert';
+
 let cacheContentGather;
 
 describe('Cache Contents gatherer', () => {

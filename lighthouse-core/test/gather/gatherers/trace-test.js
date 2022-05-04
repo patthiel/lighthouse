@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 import {makePromiseInspectable, flushAllTimersAndMicrotasks} from '../../test-utils.js';

@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import NetworkUserAgent from '../../../gather/gatherers/network-user-agent.js';
 import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 

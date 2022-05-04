@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import EfficientAnimatedContent from
   '../../../audits/byte-efficiency/efficient-animated-content.js';
 

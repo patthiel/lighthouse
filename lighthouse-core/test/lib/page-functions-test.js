@@ -9,8 +9,6 @@ import assert from 'assert';
 import jsdom from 'jsdom';
 import pageFunctions from '../../lib/page-functions.js';
 
-/* eslint-env jest */
-
 /* global document */
 
 describe('Page Functions', () => {

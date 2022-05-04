@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import CriticalRequestChains from '../../audits/critical-request-chains.js';
 
 import redditDevtoolsLog from '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';

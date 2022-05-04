@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import CpuProfileModel from '../../../lib/tracehouse/cpu-profile-model.js';
 
 import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';

@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import pkg from '../../package.json';
 
 import {strict as assert} from 'assert';

@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.

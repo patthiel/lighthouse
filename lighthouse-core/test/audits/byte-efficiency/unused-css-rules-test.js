@@ -9,8 +9,6 @@ import UnusedCSSAudit from '../../../audits/byte-efficiency/unused-css-rules.js'
 import {strict as assert} from 'assert';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 describe('Best Practices: unused css rules audit', () => {
   function generate(content, length) {
     const arr = [];

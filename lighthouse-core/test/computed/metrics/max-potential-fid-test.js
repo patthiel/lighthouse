@@ -13,8 +13,6 @@ import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
-/* eslint-env jest */
-
 describe('Metrics: Max Potential FID', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

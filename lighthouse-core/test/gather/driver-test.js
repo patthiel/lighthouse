@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 import Driver from '../../gather/driver.js';
 import Connection from '../../gather/connections/connection.js';

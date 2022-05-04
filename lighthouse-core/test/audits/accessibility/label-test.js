@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/label.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: label audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

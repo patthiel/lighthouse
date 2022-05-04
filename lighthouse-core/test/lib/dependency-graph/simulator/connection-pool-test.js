@@ -9,7 +9,6 @@ import ConnectionPool from '../../../../lib/dependency-graph/simulator/connectio
 import {strict as assert} from 'assert';
 import {URL} from 'url';
 
-/* eslint-env jest */
 describe('DependencyGraph/Simulator/ConnectionPool', () => {
   const rtt = 100;
   const throughput = 10000 * 1024;

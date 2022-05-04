@@ -8,8 +8,6 @@
 import Audit from '../../../audits/accessibility/meta-viewport.js';
 import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
 describe('Accessibility: meta-viewport audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

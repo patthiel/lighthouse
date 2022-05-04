@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import Gatherer from '../../../gather/gatherers/gatherer.js';
 
 import {strict as assert} from 'assert';

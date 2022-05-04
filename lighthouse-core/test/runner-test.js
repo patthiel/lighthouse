@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 // import Runner from '../runner.js';
 // import GatherRunner from '../gather/gather-runner.js';

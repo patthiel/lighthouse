@@ -7,8 +7,6 @@
 
 import JsLibrariesAudit from '../../../audits/dobetterweb/js-libraries.js';
 import {strict as assert} from 'assert';
-
-/* eslint-env jest */
 describe('Returns detected front-end JavaScript libraries', () => {
   it('not applicable when there are no stacks', () => {
     // no libraries

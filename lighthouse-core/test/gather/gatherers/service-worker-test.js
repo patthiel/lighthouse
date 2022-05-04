@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 import {strict as assert} from 'assert';
 import {fnAny} from '../../test-utils.js';

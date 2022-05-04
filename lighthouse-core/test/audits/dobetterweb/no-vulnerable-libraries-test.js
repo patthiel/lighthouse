@@ -8,8 +8,6 @@
 import NoVulnerableLibrariesAudit from '../../../audits/dobetterweb/no-vulnerable-libraries.js';
 import {strict as assert} from 'assert';
 import semver from 'semver';
-
-/* eslint-env jest */
 describe('Avoids front-end JavaScript libraries with known vulnerabilities', () => {
   describe('#normalizeVersion', () => {
     it('should leave valid and unsavable versions untouched', () => {
