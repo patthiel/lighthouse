@@ -13,7 +13,7 @@
 
 import fs from 'fs';
 import os from 'os';
-import {Worker, isMainThread, parentPort} from 'worker_threads';
+import {Worker, isMainThread, parentPort, workerData} from 'worker_threads';
 
 import puppeteer from 'puppeteer-core';
 import ChromeLauncher from 'chrome-launcher';
@@ -24,8 +24,8 @@ import {loadArtifacts, saveArtifacts} from '../../../../lighthouse-core/lib/asse
 
 // This runs only in the worker. The rest runs on the main thread.
 if (!isMainThread && parentPort) {
-  parentPort.once('message', async (message) => {
-    const {url, configJson, testRunnerOptions} = message;
+  (async () => {
+    const {url, configJson, testRunnerOptions} = workerData;
     try {
       const result = await runBundledLighthouse(url, configJson, testRunnerOptions);
       // Save to assets directory because LighthouseError won't survive postMessage.
@@ -40,7 +40,7 @@ if (!isMainThread && parentPort) {
       console.error(err);
       parentPort?.postMessage({type: 'error', value: err});
     }
-  });
+  })();
 }
 
 /**
@@ -115,6 +115,7 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   const worker = new Worker(workerFilename, {
     stdout: true,
     stderr: true,
+    workerData: {url, configJson, testRunnerOptions},
   });
   worker.stdout.setEncoding('utf8');
   worker.stderr.setEncoding('utf8');
@@ -135,7 +136,6 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
       }
     });
   });
-  worker.postMessage({url, configJson, testRunnerOptions});
 
   const result = await promise;
   if (!result.lhr || !result.assetsDir) {
