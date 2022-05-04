@@ -23,18 +23,16 @@ const PORT = 8041;
 async function login(browser, origin) {
   const page = await browser.newPage();
   await page.goto(origin);
-  await page.waitForSelector('input[type="email"]', {visible: true});
+  await page.waitForSelector('#username', {visible: true});
 
   // Fill in and submit login form.
-  const emailInput = await page.$('input[type="email"]');
-  await emailInput.type('admin@example.com');
-  const passwordInput = await page.$('input[type="password"]');
-  await passwordInput.type('password');
-  await Promise.all([
-    page.$eval('.login-form', form => form.submit()),
-    page.waitForNavigation(),
-  ]);
-
+  const emailInput = await page.$('#username');
+  await emailInput.type('test-account');
+  const passwordInput = await page.$('#password');
+  await passwordInput.type('some_test_password');
+  const submit = await page.$('#submit');
+  await submit.click();
+  await page.waitForSelector('[data-qa-add-new-menu-button]', {visible: true});
   await page.close();
 }
 
@@ -42,28 +40,32 @@ async function login(browser, origin) {
  * @param {puppeteer.Browser} browser
  * @param {string} origin
  */
-async function logout(browser, origin) {
-  const page = await browser.newPage();
-  await page.goto(`${origin}/logout`);
-  await page.close();
-}
+// async function logout(browser, origin) {
+//   const page = await browser.newPage();
+//   await page.goto(`${origin}/logout`);
+//   await page.close();
+// }
 
 async function main() {
   // Direct Puppeteer to open Chrome with a specific debugging port.
   const browser = await puppeteer.launch({
+    // we can pass other options in here, like disabling cert verification
     args: [`--remote-debugging-port=${PORT}`],
     // Optional, if you want to see the tests in action.
     headless: false,
-    slowMo: 50,
   });
 
   // Setup the browser session to be logged into our site.
-  await login(browser, 'http://localhost:10632');
+  await login(browser, 'https://cloud.linode.com/');
 
   // The local server is running on port 10632.
-  const url = 'http://localhost:10632/dashboard';
+  const url = 'https://cloud.linode.com/linodes';
   // Direct Lighthouse to use the same port.
-  const result = await lighthouse(url, {port: PORT, disableStorageReset: true});
+  const result = await lighthouse(url, {
+    port: PORT,
+    disableStorageReset: true,
+    onlyCategories: ['accessibility'],
+  });
   // Direct Puppeteer to close the browser as we're done with it.
   await browser.close();
 
@@ -76,6 +78,6 @@ if (require.main === module) {
 } else {
   module.exports = {
     login,
-    logout,
+    // logout,
   };
 }
