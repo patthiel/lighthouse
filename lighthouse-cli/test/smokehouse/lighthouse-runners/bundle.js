@@ -22,6 +22,7 @@ import ChromeProtocol from '../../../../lighthouse-core/gather/connections/cri.j
 import {LH_ROOT} from '../../../../root.js';
 import {loadArtifacts, saveArtifacts} from '../../../../lighthouse-core/lib/asset-saver.js';
 
+// This runs only in the worker. The rest runs on the main thread.
 if (!isMainThread && parentPort) {
   parentPort.once('message', async (message) => {
     const {url, configJson, testRunnerOptions} = message;
